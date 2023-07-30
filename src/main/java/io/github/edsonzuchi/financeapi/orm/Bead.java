@@ -1,9 +1,10 @@
 package io.github.edsonzuchi.financeapi.orm;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @NotNull
 @Entity
@@ -14,6 +15,8 @@ public class Bead {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "title is null")
+    @NotBlank(message = "title is blank")
     @Column(name = "title",
             length = 45)
     private String title;
@@ -22,13 +25,16 @@ public class Bead {
             columnDefinition = "TEXT")
     private String description;
 
+    @NotNull(message = "user is null")
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "inclusion_date")
-    private LocalDateTime inclusionDate;
+    @Column(name = "reference_date",
+            columnDefinition = "DATE")
+    private Date referenceDate;
 
+    @NotNull(message = "value is null")
     @Column(name = "value")
     private Double value;
 
@@ -67,12 +73,12 @@ public class Bead {
         this.user = user;
     }
 
-    public LocalDateTime getInclusionDate() {
-        return inclusionDate;
+    public Date getReferenceDate() {
+        return referenceDate;
     }
 
-    public void setInclusionDate(LocalDateTime inclusionDate) {
-        this.inclusionDate = inclusionDate;
+    public void setReferenceDate(Date referenceDate) {
+        this.referenceDate = referenceDate;
     }
 
     public Double getValue() {
