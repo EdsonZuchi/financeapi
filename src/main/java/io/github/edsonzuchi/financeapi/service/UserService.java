@@ -4,7 +4,15 @@ import io.github.edsonzuchi.financeapi.orm.User;
 import io.github.edsonzuchi.financeapi.repository.UserRepository;
 import io.github.edsonzuchi.financeapi.response.ListUserResponse;
 import io.github.edsonzuchi.financeapi.response.UserResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -25,32 +33,43 @@ public class UserService {
     }
 
     public UserResponse saveNewUser(User user){
-        if(user != null){
-            if(user.getEmail() == null){
-                return new UserResponse(null, "email is null");
-            }
-            if(user.getName() == null){
-                return new UserResponse(null, "name is null");
-            }
-            if(user.getName().trim().equals("")){
-                return new UserResponse(null, "uninformed user name");
-            }
-            if(user.getEmail().trim().equals("")){
-                return new UserResponse(null, "uninformed user email");
-            }
-            user.setUsername(geraUsername(user.getName()));
-            return new UserResponse(userRepository.save(user), null);
-        }else{
-            return new UserResponse(null, "uninformed user");
+        try {
+            validateUser(user);
+        }catch (Exception e){
+            return new UserResponse(null, e.toString());
         }
+        user.setUsername(generateUsername(user.getName()));
+        if(userRepository.findByEmail(user.getEmail()).isPresent()){
+            return new UserResponse(null, "e-mail is present in database");
+        }
+        if(userRepository.findByUsername(user.getUsername()).isPresent()){
+            return new UserResponse(null, "username is present in database");
+        }
+        return new UserResponse(userRepository.save(user), null);
     }
 
-    private String geraUsername(String name){
+    private String generateUsername(String name){
         String[] partsOfName = name.split(" ");
         String username = partsOfName[0].trim()+"."+partsOfName[partsOfName.length - 1].trim();
         if(username.length() > 30){
             username = username.substring(0, 30);
         }
         return username.toLowerCase();
+    }
+
+    private void validateUser(User user){
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+
+        if (violations.isEmpty()) {
+            return;
+        }
+
+        List<String> messages = new ArrayList<>();
+        for (ConstraintViolation<User> violation: violations){
+            messages.add(violation.getMessage());
+        }
+        throw new IllegalArgumentException(messages.toString());
     }
 }

@@ -1,7 +1,11 @@
 package io.github.edsonzuchi.financeapi.orm;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
+import java.util.Date;
+
+@NotNull
 @Entity
 @Table(name = "user")
 public class User{
@@ -11,16 +15,26 @@ public class User{
     private Long id;
 
     @Column(name = "username",
-            length = 30)
+            length = 30,
+            unique = true)
     private String username;
 
+    @NotBlank(message = "name is blank")
     @Column(name = "name",
             length = 60)
     private String name;
 
+    @Email(message = "email invalid")
     @Column(name = "email",
-            length = 100)
+            length = 100,
+            unique = true)
     private String email;
+
+    @NotNull(message = "birthday is null")
+    @PastOrPresent(message = "The date must be in the past")
+    @Column(name = "birthday",
+            columnDefinition = "DATE")
+    private Date birthday;
 
     public Long getId() {
         return id;
@@ -52,6 +66,14 @@ public class User{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     @Override

@@ -18,15 +18,7 @@ public class ListBeadResponse {
         return beads;
     }
 
-    public void setBeads(List<Bead> beads) {
-        this.beads = beads;
-    }
-
     public String getError() {
         return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
     }
 }

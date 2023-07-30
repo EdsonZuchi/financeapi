@@ -16,15 +16,7 @@ public class BeadResponse {
         return bead;
     }
 
-    public void setBead(Bead bead) {
-        this.bead = bead;
-    }
-
     public String getError() {
         return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
     }
 }

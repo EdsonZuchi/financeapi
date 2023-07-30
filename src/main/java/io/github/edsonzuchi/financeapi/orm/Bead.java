@@ -1,10 +1,11 @@
 package io.github.edsonzuchi.financeapi.orm;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
+@NotNull
 @Entity
 @Table(name = "bead")
 public class Bead {
@@ -21,21 +22,18 @@ public class Bead {
             columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "reference_date",
-            columnDefinition = "DATE")
-    private LocalDate referenceDate;
-
-    @Column(name = "value")
-    private Double value;
-
-    @Column(name = "installment")
-    private Integer installment;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    /*Get e set*/
+    @Column(name = "inclusion_date")
+    private LocalDateTime inclusionDate;
+
+    @Column(name = "value")
+    private Double value;
+
+    @Column(name = "installments")
+    private Integer installments;
 
     public Long getId() {
         return id;
@@ -61,12 +59,20 @@ public class Bead {
         this.description = description;
     }
 
-    public LocalDate getReferenceDate() {
-        return referenceDate;
+    public User getUser() {
+        return user;
     }
 
-    public void setReferenceDate(LocalDate referenceDate) {
-        this.referenceDate = referenceDate;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public LocalDateTime getInclusionDate() {
+        return inclusionDate;
+    }
+
+    public void setInclusionDate(LocalDateTime inclusionDate) {
+        this.inclusionDate = inclusionDate;
     }
 
     public Double getValue() {
@@ -77,19 +83,11 @@ public class Bead {
         this.value = value;
     }
 
-    public Integer getInstallment() {
-        return installment;
+    public Integer getInstallments() {
+        return installments;
     }
 
-    public void setInstallment(Integer installment) {
-        this.installment = installment;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setInstallments(Integer installments) {
+        this.installments = installments;
     }
 }
