@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @NotNull
 @Entity
@@ -32,7 +34,7 @@ public class Bead {
 
     @Column(name = "reference_date",
             columnDefinition = "DATE")
-    private Date referenceDate;
+    private LocalDate referenceDate;
 
     @NotNull(message = "value is null")
     @Column(name = "value")
@@ -73,11 +75,11 @@ public class Bead {
         this.user = user;
     }
 
-    public Date getReferenceDate() {
+    public LocalDate getReferenceDate() {
         return referenceDate;
     }
 
-    public void setReferenceDate(Date referenceDate) {
+    public void setReferenceDate(LocalDate referenceDate) {
         this.referenceDate = referenceDate;
     }
 

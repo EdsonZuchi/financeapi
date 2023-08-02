@@ -17,12 +17,17 @@ public class BeadController {
     }
 
     @GetMapping("/{id}")
-    public BeadResponse visualizeId(@PathVariable Long id){
+    public BeadResponse visualizeBead(@PathVariable Long id){
         return beadService.findId(id);
     }
 
     @PostMapping
     public BeadResponse newBead(@RequestBody Bead bead){
         return beadService.newBead(bead);
+    }
+
+    @DeleteMapping("/{id}")
+    public BeadResponse deleteBead(@PathVariable Long id){
+        return beadService.deleteBead(id);
     }
 }
