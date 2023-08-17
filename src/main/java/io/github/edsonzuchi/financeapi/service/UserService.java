@@ -8,11 +8,13 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -30,6 +32,22 @@ public class UserService {
     public UserResponse findByIdUser(Long id){
         return userRepository.findById(id).map(value -> new UserResponse(value, null))
                                           .orElseGet(() -> new UserResponse(null, "user not found"));
+    }
+
+    public UserResponse checksUser(String username, String birthday) {
+        if(birthday.isBlank()){
+            return new UserResponse(null, "Birthday is blank");
+        }
+        LocalDate dateBirthday = LocalDate.parse(birthday);
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (userOptional.isEmpty()) {
+            return new UserResponse(null, "Username not found");
+        }
+        User user = userOptional.get();
+        if (!dateBirthday.equals(user.getBirthday())) {
+            return new UserResponse(null, "Birthday is not compatible");
+        }
+        return new UserResponse(user, null);
     }
 
     public UserResponse saveNewUser(User user){

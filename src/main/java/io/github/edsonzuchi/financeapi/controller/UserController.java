@@ -27,8 +27,14 @@ public class UserController {
         return userService.findByIdUser(id);
     }
 
+    @GetMapping("/checks")
+    public UserResponse checksUser(@RequestParam String username, @RequestParam String birthday) {
+        return userService.checksUser(username, birthday);
+    }
+
     @PostMapping
     public UserResponse newUser(@RequestBody User user){
+        System.out.println("Bateu");
         return userService.saveNewUser(user);
     }
 

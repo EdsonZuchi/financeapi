@@ -3,6 +3,7 @@ package io.github.edsonzuchi.financeapi.orm;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @NotNull
@@ -34,7 +35,7 @@ public class User{
     @PastOrPresent(message = "The date must be in the past")
     @Column(name = "birthday",
             columnDefinition = "DATE")
-    private Date birthday;
+    private LocalDate birthday;
 
     public Long getId() {
         return id;
@@ -68,11 +69,11 @@ public class User{
         this.email = email;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
