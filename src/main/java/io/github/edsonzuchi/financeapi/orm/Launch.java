@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "launch")
@@ -35,8 +36,8 @@ public class Launch {
         this.id = id;
     }
 
-    public LocalDate getReferenceDate() {
-        return referenceDate;
+    public String getReferenceDate() {
+        return referenceDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     public void setReferenceDate(LocalDate referenceDate) {

@@ -1,6 +1,7 @@
 package io.github.edsonzuchi.financeapi.controller;
 
 import io.github.edsonzuchi.financeapi.response.ListLaunchResponse;
+import io.github.edsonzuchi.financeapi.response.ValueResponse;
 import io.github.edsonzuchi.financeapi.service.LaunchService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -22,4 +23,10 @@ public class LaunchController {
     public ListLaunchResponse findYearAndMonthLaunch(@PathVariable Integer year, @PathVariable Integer month){
         return launchService.findLaunches(year, month);
     }
+
+    @GetMapping("/{year}/{month}/total")
+    public ValueResponse findYearAndMonthTotal(@PathVariable Integer year, @PathVariable Integer month){
+        return launchService.findTotal(year, month);
+    }
+
 }

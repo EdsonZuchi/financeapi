@@ -21,4 +21,7 @@ public interface LaunchRepository extends JpaRepository<Launch, Long> {
 
     @Query("select l from Launch l where YEAR(l.referenceDate) = :year and MONTH(l.referenceDate) = :month")
     List<Launch> findByYearAndMonth(@Param("year") Integer year, @Param("month") Integer month);
+
+    @Query("select SUM(l.value) from Launch l where YEAR(l.referenceDate) = :year and MONTH(l.referenceDate) = :month")
+    Double findByYearAndMonthTotal(@Param("year") Integer year, @Param("month") Integer month);
 }

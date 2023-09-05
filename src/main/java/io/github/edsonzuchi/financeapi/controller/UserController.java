@@ -34,7 +34,6 @@ public class UserController {
 
     @PostMapping
     public UserResponse newUser(@RequestBody User user){
-        System.out.println("Bateu");
         return userService.saveNewUser(user);
     }
 

@@ -44,7 +44,8 @@ public class UserService {
             return new UserResponse(null, "Username not found");
         }
         User user = userOptional.get();
-        if (!dateBirthday.equals(user.getBirthday())) {
+
+        if (!dateBirthday.equals(LocalDate.parse(user.getBirthday()))) {
             return new UserResponse(null, "Birthday is not compatible");
         }
         return new UserResponse(user, null);
@@ -58,10 +59,10 @@ public class UserService {
         }
         user.setUsername(generateUsername(user.getName()));
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
-            return new UserResponse(null, "e-mail is present in database");
+            return new UserResponse(null, "E-mail is present in database");
         }
         if(userRepository.findByUsername(user.getUsername()).isPresent()){
-            return new UserResponse(null, "username is present in database");
+            return new UserResponse(null, "Username is present in database");
         }
         return new UserResponse(userRepository.save(user), null);
     }

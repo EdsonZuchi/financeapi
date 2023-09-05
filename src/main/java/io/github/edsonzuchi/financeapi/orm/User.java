@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @NotNull
@@ -69,8 +70,8 @@ public class User{
         this.email = email;
     }
 
-    public LocalDate getBirthday() {
-        return birthday;
+    public String getBirthday() {
+        return birthday.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     public void setBirthday(LocalDate birthday) {
