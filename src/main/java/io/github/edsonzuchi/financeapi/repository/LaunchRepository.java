@@ -1,6 +1,6 @@
 package io.github.edsonzuchi.financeapi.repository;
 
-import io.github.edsonzuchi.financeapi.orm.Bead;
+import io.github.edsonzuchi.financeapi.orm.Bill;
 import io.github.edsonzuchi.financeapi.orm.Launch;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,8 +16,8 @@ public interface LaunchRepository extends JpaRepository<Launch, Long> {
 
     @Transactional
     @Modifying
-    @Query("delete from Launch l where l.bead = :bead")
-    void deleteAllLaunchOfBead(@Param("bead") Bead bead);
+    @Query("delete from Launch l where l.bill = :bill")
+    void deleteAllLaunchOfBill(@Param("bill") Bill bill);
 
     @Query("select l from Launch l where YEAR(l.referenceDate) = :year and MONTH(l.referenceDate) = :month")
     List<Launch> findByYearAndMonth(@Param("year") Integer year, @Param("month") Integer month);

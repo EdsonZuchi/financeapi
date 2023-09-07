@@ -1,7 +1,6 @@
 package io.github.edsonzuchi.financeapi.orm;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,8 +18,8 @@ public class Launch {
     private LocalDate referenceDate;
 
     @ManyToOne
-    @JoinColumn(name = "bead_id")
-    private Bead bead;
+    @JoinColumn(name = "bill_id")
+    private Bill bill;
 
     @Column(name = "installment")
     private Integer installment;
@@ -44,12 +43,12 @@ public class Launch {
         this.referenceDate = referenceDate;
     }
 
-    public Bead getBead() {
-        return bead;
+    public Bill getBill() {
+        return bill;
     }
 
-    public void setBead(Bead bead) {
-        this.bead = bead;
+    public void setBill(Bill bill) {
+        this.bill = bill;
     }
 
     public Integer getInstallment() {

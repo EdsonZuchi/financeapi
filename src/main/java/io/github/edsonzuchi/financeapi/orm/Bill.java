@@ -5,13 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 @NotNull
 @Entity
-@Table(name = "bead")
-public class Bead {
+@Table(name = "bill")
+public class Bill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
